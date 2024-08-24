@@ -82,4 +82,15 @@ public class UserServiceImpl implements UserService{
             throw new RuntimeException((e));
         }
     }
+
+    @Override
+    public Boolean removeUser(Long id) {
+        try{
+            userRepository.deleteById(id);
+            return Boolean.TRUE;
+        }catch (Exception e){
+            logger.info("An error occurred deleting user with id: {}", id);
+            throw new RuntimeException((e));
+        }
+    }
 }

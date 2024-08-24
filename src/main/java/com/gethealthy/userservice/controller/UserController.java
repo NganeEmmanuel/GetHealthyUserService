@@ -18,13 +18,11 @@ public class UserController {
 
     @GetMapping("/user")
     public ResponseEntity<UserDTO> getUserById(@RequestParam Long id) throws UserNotFoundException {
-
         return ResponseEntity.ok(userService.getUserById(id));
     }
 
     @GetMapping("/users")
     public ResponseEntity<UserDTO> getUserByUsername(@RequestParam String username) throws NoMatchingUserFoundException {
-
         return ResponseEntity.ok(userService.getUserByUsername(username));
     }
 
@@ -36,6 +34,11 @@ public class UserController {
     @PutMapping("/update")
     public ResponseEntity<UserDTO> updateUser(@RequestBody UserDTO userDTO) throws UserNotFoundException{
         return ResponseEntity.ok(userService.updatedUser(userDTO));
+    }
+
+    @DeleteMapping("/remove")
+    public ResponseEntity<Boolean> removeUser(@RequestParam Long id) {
+        return ResponseEntity.ok(userService.removeUser(id));
     }
 
 }

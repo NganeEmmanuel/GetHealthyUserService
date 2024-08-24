@@ -38,4 +38,12 @@ public interface UserService {
      * @throws UserNotFoundException is user is not found by ID
      */
     UserDTO updatedUser(UserDTO userDTO) throws UserNotFoundException;
+
+    /**
+     *
+     * @param id Long data type for user id
+     * @return true if successful and false if not
+     */
+    Boolean removeUser(Long id);
+
 }
