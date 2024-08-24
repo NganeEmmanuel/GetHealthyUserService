@@ -5,6 +5,7 @@ import com.gethealthy.userservice.exception.NoMatchingUserFoundException;
 import com.gethealthy.userservice.exception.UserNotFoundException;
 import com.gethealthy.userservice.model.User;
 import com.gethealthy.userservice.model.UserDTO;
+import com.gethealthy.userservice.model.UserRequest;
 import com.gethealthy.userservice.repository.UserRepository;
 import jdk.jshell.spi.ExecutionControl;
 import lombok.RequiredArgsConstructor;
@@ -37,13 +38,18 @@ public class UserServiceImpl implements UserService{
 
 
     @Override
-    public UserDTO addUser(UserDTO userDTO, String password) throws ExecutionControl.UserException {
-        var user = userWrapperService.toEntity(userDTO);
-        user.setPassword(password);
+    public UserDTO addUser(UserRequest userRequest) throws ExecutionControl.UserException {
+        var user = User.builder()
+                .name(userRequest.getName())
+                .password(userRequest.getPassword())
+                .email(userRequest.getEmail())
+                .username(userRequest.getUsername())
+                .authority(UserAuthority.USER)
+                .build();
         try {
             return userWrapperService.toDTO(userRepository.save(user));
         }catch (Exception e){
-            logger.info("Error saving user information: {}", userDTO);
+            logger.info("Error saving user information: {}", userRequest);
             throw new ExecutionControl.UserException("Error saving user information", "User", e.getStackTrace());
         }
     }

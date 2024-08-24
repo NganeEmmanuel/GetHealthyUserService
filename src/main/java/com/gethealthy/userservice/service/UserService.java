@@ -3,6 +3,7 @@ package com.gethealthy.userservice.service;
 import com.gethealthy.userservice.exception.NoMatchingUserFoundException;
 import com.gethealthy.userservice.exception.UserNotFoundException;
 import com.gethealthy.userservice.model.UserDTO;
+import com.gethealthy.userservice.model.UserRequest;
 import jdk.jshell.spi.ExecutionControl;
 
 public interface UserService {
@@ -16,12 +17,11 @@ public interface UserService {
 
     /**
      *
-     * @param userDTO user object to be saved
-     * @param password encrypted string
+     * @param user userRequest object to be saved
      * @return userDTO of saved user
      * @throws  ExecutionControl.UserException if user was unable to be added to the database
      */
-    UserDTO addUser(UserDTO userDTO, String password) throws ExecutionControl.UserException;
+    UserDTO addUser(UserRequest user) throws ExecutionControl.UserException;
 
     /**
      *
