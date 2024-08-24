@@ -2,7 +2,9 @@ package com.gethealthy.userservice.service;
 
 import com.gethealthy.userservice.model.UserDTO;
 import com.gethealthy.userservice.model.User;
+import org.springframework.stereotype.Service;
 
+@Service
 public class UserMapperService implements MapperService<UserDTO, User> {
     @Override
     public UserDTO toDTO(User user) {
