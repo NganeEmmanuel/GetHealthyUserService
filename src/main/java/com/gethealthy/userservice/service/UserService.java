@@ -1,5 +1,6 @@
 package com.gethealthy.userservice.service;
 
+import com.gethealthy.userservice.exception.NoMatchingUserFoundException;
 import com.gethealthy.userservice.exception.UserNotFoundException;
 import com.gethealthy.userservice.model.User;
 import com.gethealthy.userservice.model.UserDTO;
@@ -10,9 +11,9 @@ public interface UserService {
      *
      * @param id Data type of lONG
      * @return a new user object if found
-     * @throws com.gethealthy.userservice.exception.UserNotFoundException if user is not found
+     * @throws UserNotFoundException if user is not found in the database
      */
-    User getUserById(Long id) throws UserNotFoundException;
+    UserDTO getUserById(Long id) throws UserNotFoundException;
 
     /**
      *
@@ -21,4 +22,12 @@ public interface UserService {
      * @throws  ExecutionControl.UserException if user was unable to be added to the database
      */
     UserDTO signup(User user) throws ExecutionControl.UserException;
+
+    /**
+     *
+     * @param username string by which you want to filter by
+     * @return userDTO of saved user
+     * @throws  NoMatchingUserFoundException when user was not found in the database
+     */
+    UserDTO getUserByUsername(String username) throws NoMatchingUserFoundException;
 }

@@ -1,6 +1,7 @@
 package com.gethealthy.userservice.service;
 
 import com.gethealthy.userservice.enums.UserAuthority;
+import com.gethealthy.userservice.exception.NoMatchingUserFoundException;
 import com.gethealthy.userservice.exception.UserNotFoundException;
 import com.gethealthy.userservice.model.User;
 import com.gethealthy.userservice.model.UserDTO;
@@ -20,13 +21,17 @@ public class UserServiceImpl implements UserService{
     private static final Logger logger = LoggerFactory.getLogger(UserServiceImpl.class);
 
     @Override
-    public User getUserById(Long id) throws UserNotFoundException {
+    public UserDTO getUserById(Long id) throws UserNotFoundException {
         try {
-            return userRepository.findById(id)
+            var user = userRepository.findById(id)
                     .orElseThrow(() -> new UserNotFoundException(id));
+            return userWrapperService.toDTO(user);
         }catch (UserNotFoundException userNotFoundException){
             logger.info("Error getting user with id: {}", id);
             throw new RuntimeException();
+        }catch (Exception e){
+            logger.info("An error occurred getting user with id: {}", id);
+            throw new RuntimeException((e));
         }
     }
 
@@ -40,6 +45,21 @@ public class UserServiceImpl implements UserService{
         }catch (Exception e){
             logger.info("Error saving user information: {}", user);
             throw new ExecutionControl.UserException("Error saving user information", "User", e.getStackTrace());
+        }
+    }
+
+    @Override
+    public UserDTO getUserByUsername(String username) throws NoMatchingUserFoundException {
+        try {
+            var user =  userRepository.findByUsername(username)
+                    .orElseThrow(() -> new NoMatchingUserFoundException(username));
+            return userWrapperService.toDTO(user);
+        }catch (UserNotFoundException userNotFoundException){
+            logger.info("Error getting user with username: {}", username);
+            throw new RuntimeException();
+        }catch (Exception e){
+            logger.info("An error occurred getting user with username: {}", username);
+            throw new RuntimeException((e));
         }
     }
 }

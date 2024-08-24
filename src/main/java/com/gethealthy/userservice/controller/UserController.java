@@ -1,5 +1,6 @@
 package com.gethealthy.userservice.controller;
 
+import com.gethealthy.userservice.exception.NoMatchingUserFoundException;
 import com.gethealthy.userservice.model.User;
 import com.gethealthy.userservice.model.UserDTO;
 import com.gethealthy.userservice.service.UserService;
@@ -13,8 +14,9 @@ import org.springframework.web.bind.annotation.*;
 @RequiredArgsConstructor
 public class UserController {
     UserService userService;
+
     @GetMapping("/users")
-    public ResponseEntity<User> getUserById(@RequestParam Long id) {
+    public ResponseEntity<UserDTO> getUserById(@RequestParam Long id) {
 
         return ResponseEntity.ok(userService.getUserById(id));
     }
@@ -23,4 +25,12 @@ public class UserController {
     public ResponseEntity<UserDTO> signUp(@RequestBody User user) throws ExecutionControl.UserException {
         return ResponseEntity.ok(userService.signup(user));
     }
+
+    @GetMapping("/users")
+    public ResponseEntity<UserDTO> getUserByUsername(@RequestParam String username) throws NoMatchingUserFoundException {
+
+        return ResponseEntity.ok(userService.getUserByUsername(username));
+    }
+
+
 }
