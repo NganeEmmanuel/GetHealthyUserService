@@ -19,4 +19,10 @@ public class UserDTO {
         this.username = username;
         this.authority = authority;
     }
+
+    public UserDTO(String name, String email, String username) {
+        this.name = name;
+        this.email = email;
+        this.username = username;
+    }
 }

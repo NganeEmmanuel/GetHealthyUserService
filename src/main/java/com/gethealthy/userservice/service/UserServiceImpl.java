@@ -37,13 +37,13 @@ public class UserServiceImpl implements UserService{
 
 
     @Override
-    public UserDTO signup(User user) throws ExecutionControl.UserException {
-        user.setAuthority(UserAuthority.USER);
+    public UserDTO addUser(UserDTO userDTO, String password) throws ExecutionControl.UserException {
+        var user = userWrapperService.toEntity(userDTO);
+        user.setPassword(password);
         try {
-            userRepository.save(user);
-            return userWrapperService.toDTO(user);
+            return userWrapperService.toDTO(userRepository.save(user));
         }catch (Exception e){
-            logger.info("Error saving user information: {}", user);
+            logger.info("Error saving user information: {}", userDTO);
             throw new ExecutionControl.UserException("Error saving user information", "User", e.getStackTrace());
         }
     }
