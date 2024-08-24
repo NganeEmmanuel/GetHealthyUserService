@@ -30,4 +30,12 @@ public interface UserService {
      * @throws  NoMatchingUserFoundException when user was not found in the database
      */
     UserDTO getUserByUsername(String username) throws NoMatchingUserFoundException;
+
+    /**
+     *
+     * @param userDTO user DTO object to update the user with
+     * @return userDTO object of the updated user
+     * @throws UserNotFoundException is user is not found by ID
+     */
+    UserDTO updatedUser(UserDTO userDTO) throws UserNotFoundException;
 }

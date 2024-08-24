@@ -27,4 +27,11 @@ public class UserMapperService implements MapperService<UserDTO, User> {
         user.setAuthority(userDTO.getAuthority());
         return user;
     }
+
+    @Override
+    public void updateEntity(UserDTO userDTO, User user) {
+        user.setName(userDTO.getName());
+        user.setUsername(userDTO.getUsername());
+        user.setEmail(userDTO.getEmail());
+    }
 }

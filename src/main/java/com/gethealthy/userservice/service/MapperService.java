@@ -19,4 +19,11 @@ public interface MapperService<T,U> {
      * @return the specified entity object
      */
     public U toEntity(T t);
+
+    /**
+     *
+     * @param t the DTO object containing the updated entity information
+     * @param u the entity object to be updated
+     */
+    public void updateEntity(T t, U u);
 }

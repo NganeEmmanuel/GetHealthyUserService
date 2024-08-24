@@ -28,7 +28,7 @@ public class UserServiceImpl implements UserService{
             return userWrapperService.toDTO(user);
         }catch (UserNotFoundException userNotFoundException){
             logger.info("Error getting user with id: {}", id);
-            throw new RuntimeException();
+            throw new RuntimeException(userNotFoundException);
         }catch (Exception e){
             logger.info("An error occurred getting user with id: {}", id);
             throw new RuntimeException((e));
@@ -56,9 +56,29 @@ public class UserServiceImpl implements UserService{
             return userWrapperService.toDTO(user);
         }catch (UserNotFoundException userNotFoundException){
             logger.info("Error getting user with username: {}", username);
-            throw new RuntimeException();
+            throw new RuntimeException(userNotFoundException);
         }catch (Exception e){
             logger.info("An error occurred getting user with username: {}", username);
+            throw new RuntimeException((e));
+        }
+    }
+
+    @Override
+    public UserDTO updatedUser(UserDTO userDTO) throws UserNotFoundException {
+        try{
+            var user = userRepository.findById(userDTO.getId()).orElseThrow(
+                    () -> new UserNotFoundException(userDTO.getId())
+            );
+
+            userWrapperService.updateEntity(userDTO,user);
+            userRepository.save(user);
+            return userWrapperService.toDTO(user);
+
+        }catch (UserNotFoundException userNotFoundException){
+            logger.info("Error getting user during update with id: {}", userDTO.getId());
+            throw new RuntimeException(userNotFoundException);
+        }catch (Exception e){
+            logger.info("An error occurred getting user during update with id: {}", userDTO.getId());
             throw new RuntimeException((e));
         }
     }
