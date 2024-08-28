@@ -38,7 +38,7 @@ public class UserServiceImpl implements UserService{
 
 
     @Override
-    public UserDTO addUser(UserRequest userRequest) throws ExecutionControl.UserException {
+    public User addUser(UserRequest userRequest) throws ExecutionControl.UserException {
         var user = User.builder()
                 .name(userRequest.getName())
                 .password(userRequest.getPassword())
@@ -47,7 +47,7 @@ public class UserServiceImpl implements UserService{
                 .authority(UserAuthority.USER)
                 .build();
         try {
-            return userWrapperService.toDTO(userRepository.save(user));
+            return userRepository.save(user);
         }catch (Exception e){
             logger.info("Error saving user information: {}", userRequest);
             throw new ExecutionControl.UserException("Error saving user information", "User", e.getStackTrace());
@@ -55,11 +55,10 @@ public class UserServiceImpl implements UserService{
     }
 
     @Override
-    public UserDTO getUserByUsername(String username) throws NoMatchingUserFoundException {
+    public User getUserByUsername(String username) throws NoMatchingUserFoundException {
         try {
-            var user =  userRepository.findByUsername(username)
+            return userRepository.findByUsername(username)
                     .orElseThrow(() -> new NoMatchingUserFoundException(username));
-            return userWrapperService.toDTO(user);
         }catch (UserNotFoundException userNotFoundException){
             logger.info("Error getting user with username: {}", username);
             throw new RuntimeException(userNotFoundException);

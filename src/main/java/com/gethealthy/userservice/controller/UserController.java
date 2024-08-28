@@ -2,6 +2,7 @@ package com.gethealthy.userservice.controller;
 
 import com.gethealthy.userservice.exception.NoMatchingUserFoundException;
 import com.gethealthy.userservice.exception.UserNotFoundException;
+import com.gethealthy.userservice.model.User;
 import com.gethealthy.userservice.model.UserDTO;
 import com.gethealthy.userservice.model.UserRequest;
 import com.gethealthy.userservice.service.UserService;
@@ -22,12 +23,12 @@ public class UserController {
     }
 
     @GetMapping("/get-with-username")
-    public ResponseEntity<UserDTO> getUserByUsername(@RequestParam String username) throws NoMatchingUserFoundException {
+    public ResponseEntity<User> getUserByUsername(@RequestParam String username) throws NoMatchingUserFoundException {
         return ResponseEntity.ok(userService.getUserByUsername(username));
     }
 
     @PostMapping("/add")
-    public ResponseEntity<UserDTO> addUser(@RequestBody UserRequest user) throws ExecutionControl.UserException {
+    public ResponseEntity<User> addUser(@RequestBody UserRequest user) throws ExecutionControl.UserException {
         return ResponseEntity.ok(userService.addUser(user));
     }
 

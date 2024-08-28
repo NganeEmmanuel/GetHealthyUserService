@@ -2,6 +2,7 @@ package com.gethealthy.userservice.service;
 
 import com.gethealthy.userservice.exception.NoMatchingUserFoundException;
 import com.gethealthy.userservice.exception.UserNotFoundException;
+import com.gethealthy.userservice.model.User;
 import com.gethealthy.userservice.model.UserDTO;
 import com.gethealthy.userservice.model.UserRequest;
 import jdk.jshell.spi.ExecutionControl;
@@ -18,18 +19,18 @@ public interface UserService {
     /**
      *
      * @param user userRequest object to be saved
-     * @return userDTO of saved user
+     * @return user of saved user
      * @throws  ExecutionControl.UserException if user was unable to be added to the database
      */
-    UserDTO addUser(UserRequest user) throws ExecutionControl.UserException;
+    User addUser(UserRequest user) throws ExecutionControl.UserException;
 
     /**
      *
      * @param username string by which you want to filter by
-     * @return userDTO of saved user
+     * @return user of saved user
      * @throws  NoMatchingUserFoundException when user was not found in the database
      */
-    UserDTO getUserByUsername(String username) throws NoMatchingUserFoundException;
+    User getUserByUsername(String username) throws NoMatchingUserFoundException;
 
     /**
      *
