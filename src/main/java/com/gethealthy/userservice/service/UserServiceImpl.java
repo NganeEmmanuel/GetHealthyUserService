@@ -38,7 +38,7 @@ public class UserServiceImpl implements UserService{
 
 
     @Override
-    public User addUser(UserRequest userRequest) throws ExecutionControl.UserException {
+    public UserDTO addUser(UserRequest userRequest) throws ExecutionControl.UserException {
         var user = User.builder()
                 .name(userRequest.getName())
                 .password(userRequest.getPassword())
@@ -47,7 +47,7 @@ public class UserServiceImpl implements UserService{
                 .authority(UserAuthority.USER)
                 .build();
         try {
-            return userRepository.save(user);
+            return userWrapperService.toDTO(userRepository.save(user));
         }catch (Exception e){
             logger.info("Error saving user information: {}", userRequest);
             throw new ExecutionControl.UserException("Error saving user information", "User", e.getStackTrace());

@@ -22,7 +22,7 @@ public interface UserService {
      * @return user of saved user
      * @throws  ExecutionControl.UserException if user was unable to be added to the database
      */
-    User addUser(UserRequest user) throws ExecutionControl.UserException;
+    UserDTO addUser(UserRequest user) throws ExecutionControl.UserException;
 
     /**
      *

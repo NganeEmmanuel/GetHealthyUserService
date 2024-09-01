@@ -28,7 +28,7 @@ public class UserController {
     }
 
     @PostMapping("/add")
-    public ResponseEntity<User> addUser(@RequestBody UserRequest user) throws ExecutionControl.UserException {
+    public ResponseEntity<UserDTO> addUser(@RequestBody UserRequest user) throws ExecutionControl.UserException {
         return ResponseEntity.ok(userService.addUser(user));
     }
 
